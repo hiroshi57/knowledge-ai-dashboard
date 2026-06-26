@@ -16,6 +16,7 @@ export const MOCK_CASES: Case[] = [
     kpi: "獲得効率 6倍",
     period: "2023年〜",
     tags: ["Facebook広告", "ABテスト", "LPO", "リード獲得", "BtoC"],
+    reference_url: "https://digitalidentity.co.jp/service/ad/",
     created_at: "2024-01-01",
   },
   {
@@ -78,6 +79,7 @@ export const MOCK_CASES: Case[] = [
     kpi: "広告換算 約632万円/月の自然検索流入",
     period: "2022年〜",
     tags: ["SEO", "コンテンツ", "金融", "オーガニック", "E-E-A-T"],
+    reference_url: "https://digitalidentity.co.jp/service/content-marketing/",
     created_at: "2023-01-01",
   },
   {
@@ -93,6 +95,7 @@ export const MOCK_CASES: Case[] = [
     kpi: "確定拠出年金KW 1位・流入 437%UP",
     period: "2022年〜",
     tags: ["SEO", "金融", "確定拠出年金", "流入増加", "専門コンテンツ"],
+    reference_url: "https://digitalidentity.co.jp/service/seo/",
     created_at: "2022-10-01",
   },
   {
@@ -108,6 +111,7 @@ export const MOCK_CASES: Case[] = [
     kpi: "セッション 20倍",
     period: "2023年〜",
     tags: ["コンテンツ", "SaaS", "BtoB", "量産", "オウンドメディア"],
+    reference_url: "https://digitalidentity.co.jp/service/content-marketing/",
     created_at: "2023-06-01",
   },
   {
@@ -296,6 +300,7 @@ export const MOCK_CASES: Case[] = [
     kpi: "ChatGPT/Gemini/Claude言及率改善",
     period: "2025年7月〜",
     tags: ["LLMO", "AI Overview", "ChatGPT", "Gemini", "金融", "Forté.AI"],
+    reference_url: "https://forte-ai.digitalidentity.co.jp/",
     created_at: "2025-07-01",
   },
 
@@ -411,6 +416,7 @@ export const MOCK_CASES: Case[] = [
     kpi: "日経統合報告書アワード2023 優秀賞",
     period: "2023年〜",
     tags: ["制作", "統合報告書", "金融", "アワード", "ESG"],
+    reference_url: "https://digitalidentity.co.jp/works/",
     created_at: "2023-11-01",
   },
   {

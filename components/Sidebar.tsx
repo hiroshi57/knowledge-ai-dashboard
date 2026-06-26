@@ -9,7 +9,7 @@ const NAV = [
   { href: "/search", label: "事例・文書検索",  icon: Search },
   { href: "/draft",  label: "提案書ドラフト",  icon: FileText },
   { href: "/cases",  label: "事例一覧",        icon: BookOpen },
-  { href: "/learn",  label: "ナレッジ学習",    icon: Brain },
+  { href: "/learn",  label: "資料登録",        icon: Brain },
 ];
 
 export default function Sidebar() {

@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { MOCK_CASES } from "@/lib/mock-data";
 import { Case } from "@/types";
 import { cn, INDUSTRY_COLOR, RESULT_COLOR, SERVICE_COLOR } from "@/lib/utils";
-import { FileText, X } from "lucide-react";
+import { ExternalLink, FileText, FolderOpen, X } from "lucide-react";
 import Link from "next/link";
 
 function CaseDetail({ c, onClose }: { c: Case; onClose: () => void }) {
@@ -55,6 +55,32 @@ function CaseDetail({ c, onClose }: { c: Case; onClose: () => void }) {
               ))}
             </div>
           </div>
+
+          {/* 参照リンク */}
+          {(c.reference_url || c.drive_url) && (
+            <div className="border border-gray-200 rounded-xl p-4 space-y-2">
+              <p className="text-xs font-bold text-gray-500">📎 参照資料・リンク</p>
+              {c.reference_url && (
+                <a href={c.reference_url} target="_blank" rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-sm text-indigo-600 hover:text-indigo-800 hover:underline">
+                  <ExternalLink className="w-4 h-4 flex-shrink-0" />
+                  <span>事例・実績ページを見る</span>
+                </a>
+              )}
+              {c.drive_url && (
+                <a href={c.drive_url} target="_blank" rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800 hover:underline">
+                  <FolderOpen className="w-4 h-4 flex-shrink-0" />
+                  <span>Drive資料フォルダを開く</span>
+                </a>
+              )}
+            </div>
+          )}
+          {!c.reference_url && !c.drive_url && (
+            <div className="border border-dashed border-gray-200 rounded-xl p-3 text-center">
+              <p className="text-xs text-gray-400">提案書・資料は「<a href="/learn" className="text-indigo-500 hover:underline">資料登録</a>」からPDFをアップロードして紐付けできます</p>
+            </div>
+          )}
 
           <Link href={`/draft?case=${c.id}`}
             className="flex items-center justify-center gap-2 bg-indigo-600 text-white text-sm font-semibold py-3 rounded-xl hover:bg-indigo-700 transition-colors">

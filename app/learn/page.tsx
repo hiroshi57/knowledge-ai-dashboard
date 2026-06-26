@@ -116,8 +116,8 @@ export default function LearnPage() {
   return (
     <div className="space-y-6 max-w-3xl">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">ナレッジ学習</h1>
-        <p className="text-gray-500 text-sm mt-1">提案書・事例をアップロードしてAIに学習させます。検索・ドラフト生成に反映されます。</p>
+        <h1 className="text-2xl font-bold text-gray-900">資料登録</h1>
+        <p className="text-gray-500 text-sm mt-1">提案書・事例資料をアップロードして検索・ドラフト生成に反映させます。PDFやWordをそのままドロップするだけで登録できます。</p>
       </div>
 
       {/* Google Drive連携 */}
@@ -126,8 +126,8 @@ export default function LearnPage() {
           <CloudUpload className="w-5 h-5" />
         </div>
         <div className="flex-1">
-          <p className="font-semibold text-blue-800 text-sm">Google Drive から取り込む</p>
-          <p className="text-xs text-blue-600 mt-1">社内共有ドライブの提案書・事例資料を検索・参照できます。Drive上でファイルを選択後、内容をコピーして「テキスト貼り付け」で登録してください。</p>
+          <p className="font-semibold text-blue-800 text-sm">社内 Google Drive から取り込む</p>
+          <p className="text-xs text-blue-600 mt-1">社内共有ドライブの提案書・事例資料をDriveで検索 → 内容をコピー → 下の「テキスト貼り付けで登録」から追加できます。</p>
         </div>
         <a href="/gdrive-search.html" target="_blank" rel="noopener noreferrer"
           className="flex items-center gap-1.5 text-xs text-white bg-blue-600 rounded-lg px-4 py-2.5 hover:bg-blue-700 transition-colors font-medium flex-shrink-0 whitespace-nowrap">
@@ -161,7 +161,7 @@ export default function LearnPage() {
           className="w-full flex items-center gap-3 px-5 py-3.5 text-left hover:bg-gray-50 transition-colors">
           <FileText className="w-4 h-4 text-gray-500" />
           <span className="font-semibold text-sm text-gray-700">テキストを貼り付けて登録</span>
-          <span className="text-xs text-gray-400 ml-1">（Driveのファイル内容や議事録をコピペ）</span>
+          <span className="text-xs text-gray-400 ml-1">（Driveの内容をコピーしてここに貼り付け）</span>
         </button>
         {pasteMode && (
           <div className="border-t px-5 pb-4 space-y-3 pt-3">
@@ -189,7 +189,7 @@ export default function LearnPage() {
       <div>
         <div className="flex items-center gap-2 mb-3">
           <BookOpen className="w-4 h-4 text-indigo-500" />
-          <p className="font-semibold text-sm text-gray-700">学習済みドキュメント</p>
+          <p className="font-semibold text-sm text-gray-700">登録済み資料</p>
           <span className="text-xs text-gray-400">{docs.length}件</span>
         </div>
 

@@ -37,6 +37,8 @@ export type Case = {
   period: string;
   tags: string[];
   created_at: string;
+  reference_url?: string;   // 提案書・事例ページへのリンク
+  drive_url?: string;       // Google Drive 格納先
   relevance_score?: number;
 };
 
