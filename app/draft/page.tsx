@@ -8,8 +8,8 @@ import { cn, INDUSTRY_COLOR, SERVICE_COLOR } from "@/lib/utils";
 import { Bot, Check, ChevronDown, ChevronUp, Copy, FileText, Sparkles } from "lucide-react";
 import Link from "next/link";
 
-const INDUSTRIES: Industry[] = ["不動産", "EC・通販", "教育", "美容・健康", "BtoB製造", "飲食", "医療", "金融"];
-const SERVICES: ServiceType[] = ["SEO", "リスティング広告", "SNS運用", "コンテンツ制作", "ブランディング", "CRM", "動画制作"];
+const INDUSTRIES: Industry[] = ["金融・保険", "不動産", "EC・通販", "旅行・ホテル", "BtoB・SaaS", "通信・IT", "自動車", "その他"];
+const SERVICES: ServiceType[] = ["SEO", "運用型広告", "コンテンツマーケティング", "SNS運用", "CRO・LPO", "Web制作", "MA", "DXコンサルティング", "クリエイティブ制作", "LLMO/AIO", "調査・リサーチ"];
 
 function generateDraft(
   client: string,
