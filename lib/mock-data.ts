@@ -158,6 +158,7 @@ export const MOCK_CASES: Case[] = [
     kpi: "「新NISA 改悪」Google検索 4位",
     period: "2024年〜",
     tags: ["コンテンツ", "SEO", "金融", "NISA", "時事対応"],
+    drive_url: "https://drive.google.com/drive/folders/10-BwyAMMyz1Y6DQC5WZYhFlTMrVZsTon",
     created_at: "2024-02-01",
   },
 
@@ -419,6 +420,7 @@ export const MOCK_CASES: Case[] = [
     period: "2023年〜",
     tags: ["制作", "統合報告書", "金融", "アワード", "ESG"],
     reference_url: "https://digitalidentity.co.jp/works/",
+    drive_url: "https://drive.google.com/drive/folders/10-BwyAMMyz1Y6DQC5WZYhFlTMrVZsTon",
     created_at: "2023-11-01",
   },
   {
@@ -451,6 +453,7 @@ export const MOCK_CASES: Case[] = [
     kpi: "MA連動分析基盤の構築完了",
     period: "2022年〜",
     tags: ["MA", "データ分析", "レポーティング", "自動車", "GA4"],
+    drive_url: "https://drive.google.com/drive/folders/1WD_Pux0PnopoELoQaiHXrDg4MZIY3ybe",
     created_at: "2022-04-01",
   },
 
@@ -546,6 +549,7 @@ export const MOCK_CASES: Case[] = [
     kpi: "広告効果の定量化完了・クリエイティブ改善根拠を確立",
     period: "2025年12月〜2026年1月",
     tags: ["調査", "Instagram", "動画広告", "食品宅配", "効果測定", "クリエイティブ"],
+    drive_url: "https://drive.google.com/drive/folders/1cPC7IM9r3EPpH1eBquHySjQ3GXsVdG_5",
     created_at: "2026-01-09",
   },
   {
