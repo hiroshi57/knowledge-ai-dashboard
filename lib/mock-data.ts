@@ -32,6 +32,7 @@ export const MOCK_CASES: Case[] = [
     kpi: "CPO 昨対比41%削減",
     period: "2022年〜",
     tags: ["広告運用", "CPO", "クリエイティブ", "MA", "旅行"],
+    drive_url: "https://drive.google.com/drive/folders/11nSjlgflj7WrX6eSy2rRPss5NF3Y5C8A",
     created_at: "2023-04-01",
   },
   {
@@ -318,6 +319,7 @@ export const MOCK_CASES: Case[] = [
     kpi: "コスト削減・工数削減を同時実現",
     period: "2023年〜",
     tags: ["インハウス", "広告運用", "不動産", "内製化", "コスト削減"],
+    drive_url: "https://drive.google.com/drive/folders/1UoMbi08LgELwv2BSCdIE8wwMLGtbjMRi",
     created_at: "2023-06-01",
   },
 
@@ -528,6 +530,7 @@ export const MOCK_CASES: Case[] = [
     kpi: "購買阻害要因の特定・サイト改修根拠データ構築",
     period: "2024年7月〜11月",
     tags: ["調査", "BtoB", "セキュリティ", "デプスインタビュー", "定量調査", "購買プロセス"],
+    drive_url: "https://drive.google.com/drive/folders/1jvrwJEFbfByAXtEhyn31besVxb8zXG-h",
     created_at: "2024-11-01",
   },
   {
@@ -558,6 +561,7 @@ export const MOCK_CASES: Case[] = [
     kpi: "ブランド効果の定量検証・継続施策の根拠確立",
     period: "2024年7月",
     tags: ["調査", "教育", "ブランド", "採用マーケティング", "定量調査"],
+    drive_url: "https://drive.google.com/drive/folders/1Ubl6fttYiufFKR3xcXkGX_YS7KKncxNt",
     created_at: "2024-07-01",
   },
   {

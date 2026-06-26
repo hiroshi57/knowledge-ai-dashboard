@@ -1,45 +1,99 @@
 "use client";
-import { useState, Suspense } from "react";
+import { useState, useEffect, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { MOCK_CASES } from "@/lib/mock-data";
+import { loadOverrides, saveOverride } from "@/lib/case-overrides";
 import { Case } from "@/types";
 import { cn, INDUSTRY_COLOR, RESULT_COLOR, SERVICE_COLOR } from "@/lib/utils";
-import { ExternalLink, FileText, FolderOpen, X } from "lucide-react";
+import { Check, ExternalLink, FileText, FolderOpen, Pencil, X } from "lucide-react";
 import Link from "next/link";
 
+function useCaseWithOverride(c: Case): Case {
+  const [merged, setMerged] = useState<Case>(c);
+  const refresh = useCallback(() => {
+    const overrides = loadOverrides();
+    const ov = overrides[c.id];
+    setMerged({ ...c, ...(ov?.drive_url ? { drive_url: ov.drive_url } : {}), ...(ov?.reference_url ? { reference_url: ov.reference_url } : {}) });
+  }, [c]);
+
+  useEffect(() => {
+    refresh();
+    window.addEventListener("case_overrides_updated", refresh);
+    return () => window.removeEventListener("case_overrides_updated", refresh);
+  }, [refresh]);
+
+  return merged;
+}
+
+function DriveUrlEditor({ caseId, current, onClose }: { caseId: string; current: string; onClose: () => void }) {
+  const [value, setValue] = useState(current);
+  const [saved, setSaved] = useState(false);
+
+  const handleSave = () => {
+    saveOverride({ case_id: caseId, drive_url: value.trim() });
+    setSaved(true);
+    setTimeout(() => { setSaved(false); onClose(); }, 1000);
+  };
+
+  return (
+    <div className="border border-blue-200 bg-blue-50 rounded-xl p-3 space-y-2">
+      <p className="text-xs font-bold text-blue-700">Drive フォルダURLを設定</p>
+      <input
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder="https://drive.google.com/drive/folders/..."
+        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-200"
+      />
+      <div className="flex gap-2">
+        <button
+          onClick={handleSave}
+          disabled={!value.trim()}
+          className="flex items-center gap-1 bg-blue-600 text-white text-xs px-3 py-1.5 rounded-lg hover:bg-blue-700 disabled:opacity-50 font-medium"
+        >
+          {saved ? <><Check className="w-3 h-3" />保存済み</> : "保存"}
+        </button>
+        <button onClick={onClose} className="text-xs text-gray-500 hover:text-gray-700 px-2">キャンセル</button>
+      </div>
+    </div>
+  );
+}
+
 function CaseDetail({ c, onClose }: { c: Case; onClose: () => void }) {
+  const merged = useCaseWithOverride(c);
+  const [editingDrive, setEditingDrive] = useState(false);
+
   return (
     <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4" onClick={onClose}>
       <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-xl"
         onClick={(e) => e.stopPropagation()}>
         <div className="sticky top-0 bg-white border-b px-6 py-4 flex items-center justify-between">
-          <p className="font-bold text-gray-900 text-sm leading-snug pr-4">{c.title}</p>
+          <p className="font-bold text-gray-900 text-sm leading-snug pr-4">{merged.title}</p>
           <button onClick={onClose}><X className="w-5 h-5 text-gray-400 hover:text-gray-600" /></button>
         </div>
         <div className="p-6 space-y-5">
           <div className="flex flex-wrap gap-2">
-            <span className={cn("text-xs px-2 py-1 rounded-full font-medium", INDUSTRY_COLOR[c.industry])}>{c.industry}</span>
-            {c.services.map((s) => (
+            <span className={cn("text-xs px-2 py-1 rounded-full font-medium", INDUSTRY_COLOR[merged.industry])}>{merged.industry}</span>
+            {merged.services.map((s) => (
               <span key={s} className={cn("text-xs px-2 py-1 rounded-full", SERVICE_COLOR[s])}>{s}</span>
             ))}
-            <span className={cn("text-xs px-2 py-1 rounded-full font-medium", RESULT_COLOR[c.result])}>{c.result}</span>
+            <span className={cn("text-xs px-2 py-1 rounded-full font-medium", RESULT_COLOR[merged.result])}>{merged.result}</span>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-indigo-50 rounded-xl p-3">
               <p className="text-xs text-indigo-500 font-semibold">KPI成果</p>
-              <p className="text-sm font-bold text-indigo-700 mt-1">{c.kpi}</p>
+              <p className="text-sm font-bold text-indigo-700 mt-1">{merged.kpi}</p>
             </div>
             <div className="bg-gray-50 rounded-xl p-3">
               <p className="text-xs text-gray-500 font-semibold">実施期間</p>
-              <p className="text-sm font-medium text-gray-700 mt-1">{c.period}</p>
+              <p className="text-sm font-medium text-gray-700 mt-1">{merged.period}</p>
             </div>
           </div>
 
           {[
-            { label: "背景・課題", text: c.background },
-            { label: "戦略・施策", text: c.strategy },
-            { label: "概要", text: c.summary },
+            { label: "背景・課題", text: merged.background },
+            { label: "戦略・施策", text: merged.strategy },
+            { label: "概要", text: merged.summary },
           ].map(({ label, text }) => (
             <div key={label}>
               <p className="text-xs font-bold text-gray-500 mb-1">{label}</p>
@@ -50,39 +104,52 @@ function CaseDetail({ c, onClose }: { c: Case; onClose: () => void }) {
           <div>
             <p className="text-xs font-bold text-gray-500 mb-2">タグ</p>
             <div className="flex flex-wrap gap-1.5">
-              {c.tags.map((t) => (
+              {merged.tags.map((t) => (
                 <span key={t} className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">{t}</span>
               ))}
             </div>
           </div>
 
           {/* 参照リンク */}
-          {(c.reference_url || c.drive_url) && (
-            <div className="border border-gray-200 rounded-xl p-4 space-y-2">
+          <div className="border border-gray-200 rounded-xl p-4 space-y-2">
+            <div className="flex items-center justify-between">
               <p className="text-xs font-bold text-gray-500">📎 参照資料・リンク</p>
-              {c.reference_url && (
-                <a href={c.reference_url} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-indigo-600 hover:text-indigo-800 hover:underline">
-                  <ExternalLink className="w-4 h-4 flex-shrink-0" />
-                  <span>事例・実績ページを見る</span>
-                </a>
-              )}
-              {c.drive_url && (
-                <a href={c.drive_url} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800 hover:underline">
-                  <FolderOpen className="w-4 h-4 flex-shrink-0" />
-                  <span>Drive資料フォルダを開く</span>
-                </a>
+              {!editingDrive && (
+                <button
+                  onClick={() => setEditingDrive(true)}
+                  className="flex items-center gap-1 text-xs text-gray-400 hover:text-blue-600 transition-colors"
+                >
+                  <Pencil className="w-3 h-3" />Drive URLを{merged.drive_url ? "編集" : "追加"}
+                </button>
               )}
             </div>
-          )}
-          {!c.reference_url && !c.drive_url && (
-            <div className="border border-dashed border-gray-200 rounded-xl p-3 text-center">
+            {merged.reference_url && (
+              <a href={merged.reference_url} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-2 text-sm text-indigo-600 hover:text-indigo-800 hover:underline">
+                <ExternalLink className="w-4 h-4 flex-shrink-0" />
+                <span>事例・実績ページを見る</span>
+              </a>
+            )}
+            {merged.drive_url && !editingDrive && (
+              <a href={merged.drive_url} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800 hover:underline">
+                <FolderOpen className="w-4 h-4 flex-shrink-0" />
+                <span>Drive資料フォルダを開く</span>
+              </a>
+            )}
+            {editingDrive && (
+              <DriveUrlEditor
+                caseId={merged.id}
+                current={merged.drive_url ?? ""}
+                onClose={() => setEditingDrive(false)}
+              />
+            )}
+            {!merged.reference_url && !merged.drive_url && !editingDrive && (
               <p className="text-xs text-gray-400">提案書・資料は「<a href="/learn" className="text-indigo-500 hover:underline">資料登録</a>」からPDFをアップロードして紐付けできます</p>
-            </div>
-          )}
+            )}
+          </div>
 
-          <Link href={`/draft?case=${c.id}`}
+          <Link href={`/draft?case=${merged.id}`}
             className="flex items-center justify-center gap-2 bg-indigo-600 text-white text-sm font-semibold py-3 rounded-xl hover:bg-indigo-700 transition-colors">
             <FileText className="w-4 h-4" />この事例で提案書を作成
           </Link>
