@@ -1,14 +1,15 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, FileText, LayoutDashboard, Search } from "lucide-react";
+import { BookOpen, Brain, FileText, LayoutDashboard, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { href: "/",        label: "ダッシュボード", icon: LayoutDashboard },
-  { href: "/search",  label: "事例検索AI",     icon: Search },
-  { href: "/draft",   label: "提案書ドラフト",  icon: FileText },
-  { href: "/cases",   label: "事例一覧",        icon: BookOpen },
+  { href: "/",       label: "ダッシュボード",  icon: LayoutDashboard },
+  { href: "/search", label: "事例・文書検索",  icon: Search },
+  { href: "/draft",  label: "提案書ドラフト",  icon: FileText },
+  { href: "/cases",  label: "事例一覧",        icon: BookOpen },
+  { href: "/learn",  label: "ナレッジ学習",    icon: Brain },
 ];
 
 export default function Sidebar() {
